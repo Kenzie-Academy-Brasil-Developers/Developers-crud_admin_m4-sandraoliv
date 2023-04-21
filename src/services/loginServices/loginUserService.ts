@@ -29,6 +29,7 @@ export  const loginUserService= async(data:TLoginRequest):Promise<TLoginResponse
    if(queryResult.rowCount === 0){
       throw new AppError("Wrong email/password.", 401);
    }
+   
    const comparePassword:boolean =await bcrypt.compare(
       data.password,
       user.password

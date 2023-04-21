@@ -1,7 +1,8 @@
 import format from "pg-format"
-import { TUserRequest, TuserResponse } from "../../interfaces/userInterfaces"
+import { TUserRequest,  TuserResponse } from "../../interfaces/userInterfaces"
 import { QueryConfig, QueryResult } from "pg"
 import { client } from "../../database"
+import { responseUserSchema} from "../../schemas/userSchema"
 
 export  const upDateUsersServices= async(id :number, data:Partial<TUserRequest>):Promise<TuserResponse>=>{ 
     const queryString:string= format(
@@ -20,6 +21,7 @@ export  const upDateUsersServices= async(id :number, data:Partial<TUserRequest>)
 }
 
 const queryResult:QueryResult<TuserResponse>=await client.query(queryConfig)
-return queryResult.rows[0]  
+const newUser:TuserResponse= responseUserSchema.parse(queryResult.rows[0]) 
+return   newUser
 
 }

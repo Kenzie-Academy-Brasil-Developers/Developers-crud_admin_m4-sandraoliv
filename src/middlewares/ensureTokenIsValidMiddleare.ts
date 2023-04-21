@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express'
 import jwt from "jsonwebtoken";
 import { AppError } from '../error.ts/errors';
 
-
  export const ensureTokenIsValidMiddleware = async (
   req: Request,
   res: Response,

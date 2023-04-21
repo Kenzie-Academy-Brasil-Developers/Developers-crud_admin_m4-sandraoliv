@@ -1,14 +1,15 @@
-import { NextFunction, Request, Response } from "express";
-import { client } from "../database";
 import { QueryConfig } from "pg";
-import { TUser } from "../__tests__/mocks/interfaces";
+import { client } from "../database";
+import { Tuser } from "../interfaces/userInterfaces";
 import { AppError } from "../error.ts/errors";
+import { NextFunction, Request, Response } from "express";
 
-  export const ensureIsAdminMiddleware = async (
+export const ensureUserIsAlreadyActiveMiddleware = async (
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response | void> => {
+    
     const { id } = res.locals;
     const queryString:string=`
     'SELECT *
@@ -20,15 +21,11 @@ import { AppError } from "../error.ts/errors";
         text:queryString, 
         values: [id],
     }
-    const queryResult = await client.query<TUser>( queryConfig)
+    const queryResult = await client.query<Tuser>( queryConfig)
     const user = queryResult.rows[0];
     
-        if (!user.admin) {
-            throw new AppError("Insufficient Permission", 403);
+        if (!user.active) {
+            throw new AppError("User already active", 400);
         }
         return next();
     }
-  
-  
-
- 

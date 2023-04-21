@@ -12,4 +12,4 @@ export  const requestUserSchema = userSchema.omit({ id: true })
 
 export const responseUserSchema=  userSchema.omit({ password: true })
 
-export const updateUserSchema = requestUserSchema.partial()
+export const updateUserSchema = requestUserSchema.omit({admin:true,active:true}).partial()
