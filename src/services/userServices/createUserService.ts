@@ -22,5 +22,7 @@ Object.values(data)
 )
    const queryResult:QueryResult<TuserResponse>=await client.query(queryString)
    const newUser=responseUserSchema.parse(queryResult.rows[0])
+   console.log(newUser);
+   
    return  newUser
 }

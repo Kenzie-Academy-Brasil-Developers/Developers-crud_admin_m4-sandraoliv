@@ -11,10 +11,10 @@ import { AppError } from "../error.ts/errors";
   ): Promise<Response | void> => {
     const { id } = res.locals;
     const queryString:string=`
-    'SELECT *
+     SELECT *
      FROM 
           users
-     WHERE id = $1'
+     WHERE id = $1;
     `
     const queryConfig:QueryConfig={
         text:queryString, 

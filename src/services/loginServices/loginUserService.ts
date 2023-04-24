@@ -27,7 +27,7 @@ export  const loginUserService= async(data:TLoginRequest):Promise<TLoginResponse
     const user=queryResult.rows[0]
 
    if(queryResult.rowCount === 0){
-      throw new AppError("Wrong email/password.", 401);
+      throw new AppError("Wrong email/password", 401);
    }
    
    const comparePassword:boolean =await bcrypt.compare(
@@ -36,7 +36,7 @@ export  const loginUserService= async(data:TLoginRequest):Promise<TLoginResponse
    )
 
    if(comparePassword===false){
-      throw new AppError("Wrong email/password.", 401);
+      throw new AppError("Wrong email/password", 401);
    }
 
    const token :string= jwt.sign(

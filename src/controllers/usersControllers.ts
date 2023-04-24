@@ -11,6 +11,7 @@ import { recoverUserServices } from "../services/userServices/recoverUserService
  export const createUsersControler = async(req:Request,res:Response):Promise<Response>=>{
 
    const data:TUserRequest=req.body
+
    const newUser:TuserResponse= await createUserService(data)
 
    return  res.status(201).json(newUser)

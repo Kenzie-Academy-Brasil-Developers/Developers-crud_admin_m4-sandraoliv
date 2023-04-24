@@ -12,10 +12,10 @@ export const ensureUserIsAlreadyActiveMiddleware = async (
     
     const { id } = res.locals;
     const queryString:string=`
-    'SELECT *
+    SELECT *
      FROM 
           users
-     WHERE id = $1'
+     WHERE id = $1;
     `
     const queryConfig:QueryConfig={
         text:queryString, 

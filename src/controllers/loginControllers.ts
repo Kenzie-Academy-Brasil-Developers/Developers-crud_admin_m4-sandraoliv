@@ -7,7 +7,7 @@ const data:TLoginRequest=req.body;
 
 const token:TLoginResponse=await loginUserService(data);
 
- return res.status(201).json(token);
+ return res.status(200).json(token);
 
 }
 
