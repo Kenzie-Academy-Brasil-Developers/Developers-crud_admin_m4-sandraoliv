@@ -1,12 +1,13 @@
 import { client } from "../../database";
 import * as bcrypt from "bcryptjs";
 import {  Tuser } from "../../interfaces/userInterfaces";
-import { QueryConfig, QueryResult } from "pg";
+import { QueryResult } from "pg";
 import { TLoginRequest, TLoginResponse } from "../../interfaces/loginInterfaces";
-import { AppError } from "../../error.ts/errors";
+
 import format from "pg-format";
 import "dotenv/config";
 import jwt from "jsonwebtoken"
+import { AppError } from "../../errors/errors";
 
 export  const loginUserService= async(data:TLoginRequest):Promise<TLoginResponse>=>{  
   
@@ -19,14 +20,14 @@ export  const loginUserService= async(data:TLoginRequest):Promise<TLoginResponse
  `,
  data.email
  )
- const queryConfig:QueryConfig={
-   text:queryString,
-   values:[data.email]
- }
     const queryResult :QueryResult<Tuser> = await client.query(queryString)
     const user=queryResult.rows[0]
 
    if(queryResult.rowCount === 0){
+      throw new AppError("Wrong email/password", 401);
+   }
+   if(!queryResult.rows[0].active){
+      
       throw new AppError("Wrong email/password", 401);
    }
    
@@ -41,7 +42,8 @@ export  const loginUserService= async(data:TLoginRequest):Promise<TLoginResponse
 
    const token :string= jwt.sign(
    {
-     id:user.id,
+     
+     admin:user.admin
    },
     process.env.SECRET_KEY!,
    {

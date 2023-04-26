@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { QueryConfig, QueryResult } from "pg";
 import { client } from "../database";
-import { AppError } from "../error.ts/errors";
+import { AppError } from "../errors/errors";
 
 export const ensureUserExistsMiddleware = async (
     req: Request,
@@ -18,7 +18,6 @@ export const ensureUserExistsMiddleware = async (
     WHERE
         id = $1;
 `
-
 const queryConfig: QueryConfig = {
     text: queryString,
     values: [id],

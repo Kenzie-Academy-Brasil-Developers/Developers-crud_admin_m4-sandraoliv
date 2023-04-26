@@ -8,20 +8,18 @@ export  const upDateUsersServices= async(id :number, data:Partial<TUserRequest>)
     const queryString:string= format(
   `
   UPDATE users
-  SET (% I) = ROWS (% L)
+  SET (%I) = ROW (%L)
   RETURNING
-     "id","name","email","admin","active";
+  *;
   `,
   Object.keys(data),
   Object.values(data)
 )
-  const  queryConfig:QueryConfig={
-    text:queryString,
-    values:[id]
-}
 
-const queryResult:QueryResult<TuserResponse>=await client.query(queryConfig)
+
+const queryResult:QueryResult<TuserResponse>=await client.query(queryString)
 const newUser:TuserResponse= responseUserSchema.parse(queryResult.rows[0]) 
+
 return   newUser
 
 }

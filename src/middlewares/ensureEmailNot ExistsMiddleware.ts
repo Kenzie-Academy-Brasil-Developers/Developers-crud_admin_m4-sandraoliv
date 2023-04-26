@@ -1,7 +1,8 @@
 import {Request,Response, NextFunction } from "express";
 import { QueryConfig, QueryResult } from "pg";
 import { client } from "../database";
-import { AppError } from "../error.ts/errors";
+import { AppError } from "../errors/errors";
+
 
   export const ensureEmailNotExists= async(req:Request,res:Response,next:NextFunction):Promise<Response|void>=>{
   const {email}=req.body

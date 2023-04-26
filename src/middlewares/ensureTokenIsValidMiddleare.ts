@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import jwt from "jsonwebtoken";
-import { AppError } from '../error.ts/errors';
+import { AppError } from '../errors/errors';
 
  export const ensureTokenIsValidMiddleware = async (
   req: Request,
@@ -16,9 +16,10 @@ import { AppError } from '../error.ts/errors';
 
   jwt.verify(token, process.env.SECRET_KEY!, (err: any, decoded: any) => {
     if (err) {
-      throw new AppError(err.message, 403);
+      throw new AppError(err.message, 401);
     }
-    res.locals.id = decoded.id;
+    res.locals.id = decoded.sub;
+    res.locals.admin=decoded.admin;
   });
 
   return next();

@@ -1,16 +1,16 @@
-import { QueryConfig } from "pg";
+import { QueryConfig, QueryResult } from "pg";
 import { client } from "../database";
-import { Tuser } from "../interfaces/userInterfaces";
-import { AppError } from "../error.ts/errors";
 import { NextFunction, Request, Response } from "express";
+import { AppError } from "../errors/errors";
 
-export const ensureUserIsAlreadyActiveMiddleware = async (
+export const ensureUserIsActiveMiddleware = async (
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response | void> => {
     
-    const { id } = res.locals;
+    const { id } = req.params;
+  
     const queryString:string=`
     SELECT *
      FROM 
@@ -21,7 +21,7 @@ export const ensureUserIsAlreadyActiveMiddleware = async (
         text:queryString, 
         values: [id],
     }
-    const queryResult = await client.query<Tuser>( queryConfig)
+    const queryResult:QueryResult = await client.query(queryConfig)
     const user = queryResult.rows[0];
     
         if (!user.active) {

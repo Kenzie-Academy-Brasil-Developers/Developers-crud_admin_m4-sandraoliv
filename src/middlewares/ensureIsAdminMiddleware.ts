@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { client } from "../database";
 import { QueryConfig } from "pg";
 import { TUser } from "../__tests__/mocks/interfaces";
-import { AppError } from "../error.ts/errors";
+import { AppError } from "../errors/errors";
 
   export const ensureIsAdminMiddleware = async (
     req: Request,
@@ -10,6 +10,7 @@ import { AppError } from "../error.ts/errors";
     next: NextFunction
   ): Promise<Response | void> => {
     const { id } = res.locals;
+  
     const queryString:string=`
      SELECT *
      FROM 
@@ -22,7 +23,7 @@ import { AppError } from "../error.ts/errors";
     }
     const queryResult = await client.query<TUser>( queryConfig)
     const user = queryResult.rows[0];
-    
+   
         if (!user.admin) {
             throw new AppError("Insufficient Permission", 403);
         }
