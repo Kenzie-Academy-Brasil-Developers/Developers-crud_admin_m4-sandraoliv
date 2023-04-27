@@ -18,7 +18,7 @@ import { AppError } from '../errors/errors';
     if (err) {
       throw new AppError(err.message, 401);
     }
-    res.locals.id = decoded.sub;
+    res.locals.id = Number(decoded.sub);
     res.locals.admin=decoded.admin;
   });
 

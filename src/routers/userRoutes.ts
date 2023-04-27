@@ -22,14 +22,14 @@ export  const userRoutes:Router=Router()
 
  userRoutes.get("/profile",
  ensureTokenIsValidMiddleware,
- ensureUserIdIsTheOwnerOfAcount,
+ ensureUserExistsMiddleware,
  listUserProfileController )
 
  userRoutes.patch("/:id",
- serializedUserDataMiddleware(updateUserSchema),
  ensureTokenIsValidMiddleware,
  ensureUserExistsMiddleware,
  ensureUserIdIsTheOwnerOfAcount,
+ serializedUserDataMiddleware(updateUserSchema),
  ensureEmailNotExists,
  upDateUserController)
 

@@ -10,7 +10,6 @@ export const ensureUserIdIsTheOwnerOfAcount = async (
     next: NextFunction
   ): Promise<Response | void> => {
     const { id } = res.locals;
- 
     const userId = parseInt(req.params.id);
   
     const queryConfig: QueryConfig = {

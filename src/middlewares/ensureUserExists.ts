@@ -8,7 +8,7 @@ export const ensureUserExistsMiddleware = async (
     res: Response,
     next: NextFunction
 ): Promise<Response | void> => {
-    const id: number = parseInt(req.params.id)
+    const id: number = req.params.id? parseInt(req.params.id):res.locals.id
 
     const queryString: string = `
     SELECT

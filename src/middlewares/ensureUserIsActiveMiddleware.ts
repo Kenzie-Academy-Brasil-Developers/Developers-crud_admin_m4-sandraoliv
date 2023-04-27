@@ -24,7 +24,7 @@ export const ensureUserIsActiveMiddleware = async (
     const queryResult:QueryResult = await client.query(queryConfig)
     const user = queryResult.rows[0];
     
-        if (!user.active) {
+        if (user.active) {
             throw new AppError("User already active", 400);
         }
         return next();

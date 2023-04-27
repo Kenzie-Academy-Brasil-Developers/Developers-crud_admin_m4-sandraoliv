@@ -36,7 +36,8 @@ const data:Partial<TUserRequest>=req.body
 
 export const listUserProfileController=async(req:Request,res:Response):Promise<Response>=>{
 
-  const id:number=parseInt(req.params.id)
+  // const id:number=parseInt(req.params.id)
+  const id:number=parseInt(res.locals.id)
   const user= await listUserProfileServices(id)
 
   return res.json(user)
